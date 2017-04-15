@@ -15,8 +15,6 @@ def genStats():
 	print(str(downloadStats))
 	print("Start date is " + startDate)
 	print("End date is " + endDate)
-	ts = plt.Series(downloadStats, index=date_range(startDate, periods = len(downloadStats)))
-	ts.plot()
 
 
 

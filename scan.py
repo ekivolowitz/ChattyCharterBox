@@ -1,6 +1,6 @@
-import tweepy, json, time
+import tweepy, json, time, sys
 import pyspeedtest
-
+import Series as s
 st = pyspeedtest.SpeedTest()
 
 def auth():
@@ -48,15 +48,35 @@ def scan(download = 500, upload = 5, debug = False):
 	currUpload = stats[1]
 	if currDownload < download:
 		tweet = "Hey Charter, I pay for " + str(download) + "Mbps. I'm only getting " + str(currDownload) + " Mbps. What's up with that? :("
-	key.update_status(tweet)
+	# key.update_status(tweet)
 
 
 
-
+def convertFromStringToInt(string):
+	return int(''.join(element for element in string if element.isdigit()))
 
 
 
 
 
 if __name__ == '__main__':
-	scan()
+	with open("data/dat", 'r') as f:
+		numLines = 0
+		x = []
+		y = []
+		for line in f:
+			if numLines == 50:
+				break
+			numLines += 1
+			x.append(numLines)
+			y.append(convertFromStringToInt(line.split(" ")[1]))
+
+	print(str(x))
+	print(str(y))
+	series = s.Series(xData = x, yData = y, name = "Series")
+	series.svg.save()
+
+
+
+
+
